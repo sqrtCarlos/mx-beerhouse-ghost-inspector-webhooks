@@ -1,0 +1,20 @@
+{
+  "name": "delete-subs-webhook",
+  "version": "1.0.0",
+  "description": "webhook to handle the delete subsctiptions operation",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec \"sls offline\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Carlos Sanchez",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.18",
+    "serverless-offline": "^8.8.0",
+    "serverless-webpack": "^5.7.1"
+  },
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}
