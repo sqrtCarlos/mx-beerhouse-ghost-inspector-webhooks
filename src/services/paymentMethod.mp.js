@@ -10,7 +10,7 @@ const createCardMp = async () => {
         "expiration_month": process.env.EXP_MONTH,
         "expiration_year": process.env.EXP_YEAR,
         "cardholder": {
-          "name": process.env.CARD_OWNER
+          "name": process.env.CARD_OWNER_APRO
         }
     });
     const config = {
@@ -122,7 +122,7 @@ const setDefaulCard = async (requestToken, paymentId) => {
     return buildResponse(200, res, ['data', 'setDefaultPaymentMethod', 'id'])
 }
 
-const createPaymentMethod = async () => {
+const createMpPaymentMethod = async () => {
     const mpId = await createCardMp();
     if (mpId.success === true) {
        const keyPayment = await getPaymentKey();
@@ -152,4 +152,4 @@ const createPaymentMethod = async () => {
     }
 }
 
-module.exports = createPaymentMethod;
+module.exports = createMpPaymentMethod;

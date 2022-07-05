@@ -1,8 +1,8 @@
 require('dotenv').config();
-const createPaymentMethod = require('./services/paymentMethod.mp.js');  
+const createMpPaymentMethod = require('./services/paymentMethod.mp.js');  
 
 module.exports.webhookAddMpPaymentMethod = async (event) => {
-  createPaymentMethod();
+  createMpPaymentMethod();
   return {
     statusCode: 200,
     body: JSON.stringify(

@@ -19,15 +19,14 @@ provider:
 
 functions:
   webhookDeleteSubs:
-    handler: delete_subs.webhookDeleteSubs
+    handler: ./src/delete_subs.webhookDeleteSubs
     events:
       - httpApi:
          path: /webhook/delete-subs
          method: post
   webhookAddMpPaymentMethod:
-    handler: create_mp_payment.webhookAddMpPaymentMethod
+    handler: ./src/create_mp_payment.webhookAddMpPaymentMethod
     events:
       - httpApi:
          path: /webhook/add-mp-payment-method
          method: post
-         
