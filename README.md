@@ -21,12 +21,10 @@ This project will provision the scenarios for the tests as well as clean up thes
 
 * Clone this repo and run `npm install`
 
-* Set up the environment variables running `export $(xargs < .env)` in the main dir
-
 
 ## Test locally
 
-* `npm run dev` will run api gateway locally in your machine on port `3000` so you can test the function as it on AWS api gateway
+* `npm run dev` will start cron jobs and run api gateway locally in your machine on port `3000` so you can test the function as it on AWS api gateway
 
 * POST `/webhook/delete-subs` in order to delete all subscriptions
 
