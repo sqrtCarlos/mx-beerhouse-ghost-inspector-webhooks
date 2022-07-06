@@ -11,9 +11,8 @@ custom:
   serverless-offline:
     noPrependStageInUrl: true
   globalSchedule: cron(0/1 * * * ? *)
-  env: file(serverless/env-default.yml)
-  globalEnv: ${self:custom.env}:${self:custom.stage}
-  subsSuiteEnv: ${self:custom.env}:subsSuite
+  globalEnv: ${file(./serverless/env-default.yml):${self:custom.stage}}
+  subsSuiteEnv: ${file(./serverless/env-default.yml):subsSuite}
 
 provider:
   name: aws
@@ -39,4 +38,4 @@ functions:
     handler: ./src/createDeleteSubsScenario.runSubscriptionsSuite
     events:
       - schedule: ${self:custom.globalSchedule}
-     environment: ${self:custom.subsSuiteEnv}
+    environment: ${self:custom.subsSuiteEnv}
