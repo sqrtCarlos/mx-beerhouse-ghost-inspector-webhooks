@@ -14,8 +14,7 @@ module.exports.runSubscriptionsSuite = async (event) => {
         await deleteSubscriptions(1);
         await deletePaymentMethods();
         await createMpPaymentMethod();
-        axios(config);
-        console.log('Done!');    
+        axios(config);        
     } catch (error) {
         console.log(error);
     }    
