@@ -10,6 +10,7 @@ This project will provision the scenarios for the tests as well as clean up thes
 * Custom built for Beerhouse tests
 * Provisioning a Beerhouse account for different scenarios.
 * Integration with ghost inspector
+* Crons to run ghost inspector suites
 * Serverless offline to test the api gateway localy
 
 ## Installation
@@ -20,7 +21,7 @@ This project will provision the scenarios for the tests as well as clean up thes
 
 * Clone this repo and run `npm install`
 
-* Contact me to get the environment variables
+* Set up the environment variables running `export $(xargs < .env)` in the main dir
 
 
 ## Test locally
