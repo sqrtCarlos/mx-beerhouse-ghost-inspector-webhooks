@@ -1,0 +1,34 @@
+default: &default
+  CLIENT_ID: ${env:CLIENT_ID}
+  COGNITO_URL: ${env:COGNITO_URL}
+  BH_ENDPOINT: ${env:BH_ENDPOINT}
+  SERVICES_URL: ${env:SERVICES_URL}
+  ZX_PAYMENT_URL: ${env:ZX_PAYMENT_URL}
+  ZX_PAYMENT_TOKEN: ${env:ZX_PAYMENT_TOKEN}
+  MP_URL: ${env:MP_URL}
+  CYBER_URL: ${env:CYBER_URL}
+  CARD_NUMBER: ${env:CARD_NUMBER}
+  SEC_CODE: ${env:SEC_CODE}
+  EXP_MONTH: ${env:EXP_MONTH}
+  EXP_YEAR: ${env:EXP_YEAR}
+  CARD_OWNER_APRO: ${env:CARD_OWNER_APRO}
+  SERVER_TOKEN: ${env:SERVER_TOKEN}
+  SUBSCRIPTION_SUITE: ${env:SUBSCRIPTION_SUITE}
+  REGION: ${self:custom.region}
+
+local:
+  <<: *default
+  STAGE: local
+
+dev:
+  <<: *default
+  STAGE: dev
+
+prod:
+  <<: *default
+  STAGE: prod
+
+
+subsSuite:
+  USER_EMAIL: ${env:USER_EMAIL_SUBS_SUITE}
+  USER_PWD: ${env:USER_PWD}
