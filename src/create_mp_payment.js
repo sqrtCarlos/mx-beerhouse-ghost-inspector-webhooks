@@ -1,5 +1,5 @@
 require('dotenv').config();
-const createMpPaymentMethod = require('./services/paymentMethod.mp.js');  
+const createMpPaymentMethod = require('./services/createPaymentMethod.mp.js');  
 
 module.exports.webhookAddMpPaymentMethod = async (event) => {
   createMpPaymentMethod();

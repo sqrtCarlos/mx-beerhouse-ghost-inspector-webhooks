@@ -124,16 +124,18 @@ const setDefaulCard = async (requestToken, paymentId) => {
 
 const createMpPaymentMethod = async () => {
     const mpId = await createCardMp();
-    if (mpId.success === true) {
+    if (mpId.success) {
        const keyPayment = await getPaymentKey();
-       if (keyPayment.success === true) {
+       if (keyPayment.success) {
             const cyberToken = await getCyberSourceToken(keyPayment.data);
             const userTokenResponse = await getCognitoToken();
-            if (userTokenResponse.success === true) {
+            if (userTokenResponse.success) {
                 const userCard = await createUserCard(userTokenResponse.data.IdToken, mpId.data, cyberToken.data);
-                if (userCard.success === true) {
+                if (userCard.success) {
                     const defaultCard = await setDefaulCard(userTokenResponse.data.IdToken, userCard.data)
-                    console.log(defaultCard)
+                    if (defaultCard.success) {
+                        return { success: true }
+                    }
                 }
                 else {
                     console.log(userCard.data);
@@ -150,6 +152,7 @@ const createMpPaymentMethod = async () => {
     else {
         console.log(mpId.data);
     }
+    throw "Error in createMpPaymentMethod"
 }
 
 module.exports = createMpPaymentMethod;

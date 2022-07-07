@@ -1,8 +1,8 @@
 require('dotenv').config();
-const deleteSubscriptions = require('./services/subscriptions.js');  
+const deleteSubscriptions = require('./services/deleteSubscriptions.js');  
 
 module.exports.webhookDeleteSubs = async (event) => {
-  deleteSubscriptions();
+  deleteSubscriptions(40000);
   return {
     statusCode: 200,
     body: JSON.stringify(
