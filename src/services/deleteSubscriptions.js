@@ -105,22 +105,29 @@ const validateSubsStatus = async (token, subs) => {
     return validatedSubs;
 }
 
-const deleteSubscriptions = async () => {
-    await sleep(40000);
+const deleteSubscriptions = async (timeToSleep) => {
+    await sleep(timeToSleep);
     let userTokenResponse = await getCognitoToken();
-    if (userTokenResponse.success === true) {
+    if (userTokenResponse.success) {
         let subsResponse = await getSubscriptions(userTokenResponse.data.IdToken);
-        if (subsResponse.success === true) {
+        if (subsResponse.success) {
             let subsIds = await validateSubsStatus(userTokenResponse.data.IdToken, subsResponse.data);
             subsIds.forEach(async (subId) => {
                 let deleteResponse = await deleteSubscription(process.env.SERVER_TOKEN, subId);
-                console.log(deleteResponse);
+                if (!deleteResponse.success) {
+                    console.log("Error in deleteSubscription:\n" + deleteResponse);
+                }
             });
+            return { success: true }
+        }
+        else {
+            console.log("Error in getSubscriptions:\n" + JSON.stringify(subsResponse));
         }
     }
     else {
-        console.log(userTokenResponse.data);
+        console.log("Error in getCognitoToken:\n" + JSON.stringify(userTokenResponse.data));
     }
+    throw "Error in deleteSubscriptions";
 }
 
 module.exports = deleteSubscriptions;
