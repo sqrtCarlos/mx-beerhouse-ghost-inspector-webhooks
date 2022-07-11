@@ -3,6 +3,7 @@ const axios = require('axios');
 const createMpPaymentMethod = require('./services/createPaymentMethod.mp.js');
 const deleteSubscriptions = require('./services/deleteSubscriptions.js');
 const deletePaymentMethods = require('./services/deletePaymentMethods.js');
+const sendMessage = require('./utils/slack.utils.js');
 
 
 module.exports.runSubscriptionsSuite = async (event) => {    
@@ -14,9 +15,8 @@ module.exports.runSubscriptionsSuite = async (event) => {
         await deleteSubscriptions(1);
         await deletePaymentMethods();
         await createMpPaymentMethod();
-        axios(config);
-        console.log('Done!');    
+        axios(config);   
     } catch (error) {
-        console.log(error);
+        sendMessage(error);
     }    
 };
