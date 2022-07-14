@@ -10,6 +10,7 @@ custom:
   region: ${opt:region, 'us-east-1'}
   serverless-offline:
     noPrependStageInUrl: true
+  globalSchedule: cron(0/1 * * * ? *)
 
 provider:
   name: aws
@@ -30,3 +31,7 @@ functions:
       - httpApi:
          path: /webhook/add-mp-payment-method
          method: post
+  runSubscriptionsSuite:
+    handler: ./src/createDeleteSubsScenario.runSubscriptionsSuite
+    events:
+      - schedule: ${self:custom.globalSchedule}
