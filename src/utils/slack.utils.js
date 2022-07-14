@@ -19,14 +19,12 @@ const postMessage = async (channel, message) => {
 }
 
 const sendMessage = async (message) => {
-    channels = String(process.env.SLACK_CHANNELS).trim();
-    myChannels = channels.split(',');
-    for (ch of myChannels) {
+    const channels = String(process.env.SLACK_CHANNELS).split(',');    
+    for (ch of channels) {
         if (ch.startsWith('#')) {
-            await postMessage(ch.trim());
+            await postMessage(ch.trim(), message);
         }
     }
-    
 }
 
 module.exports = {
