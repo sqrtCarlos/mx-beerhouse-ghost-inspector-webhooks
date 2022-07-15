@@ -35,7 +35,7 @@ functions:
          path: /webhook/add-mp-payment-method
          method: post
   runSubscriptionsSuite:
-    handler: ./src/createDeleteSubsScenario.runSubscriptionsSuite
+    handler: ./src/createSubsScenario.runSubscriptionsSuite
     events:
       - schedule: ${self:custom.globalSchedule}
     environment: ${self:custom.subsSuiteEnv}
