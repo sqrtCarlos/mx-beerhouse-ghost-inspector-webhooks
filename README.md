@@ -10,7 +10,7 @@ This project will provision the scenarios for the tests as well as clean up thes
 * Custom built for Beerhouse tests
 * Provisioning a Beerhouse account for different scenarios.
 * Integration with ghost inspector
-* Crons to run ghost inspector suites
+* Integration with slack for notifications
 * Serverless offline to test the api gateway localy
 
 ## Installation
@@ -20,6 +20,10 @@ This project will provision the scenarios for the tests as well as clean up thes
 * Install & Configure serverless-offline, Guide [here](https://www.serverless.com/plugins/serverless-offline#installation)
 
 * Clone this repo and run `npm install`
+
+* Set up environment variables
+
+* Note: The `SLACK_CHANNELS` environment variable is to define one or more channels in DTC Workspace. You must separate each channel with a comma (#channel1,#channel2)
 
 
 ## Test locally
