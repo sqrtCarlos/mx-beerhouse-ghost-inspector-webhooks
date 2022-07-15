@@ -32,3 +32,4 @@ prod:
 subsSuite:
   USER_EMAIL: ${env:USER_EMAIL_SUBS_SUITE}
   USER_PWD: ${env:USER_PWD}
+  API_KEY: ${env:API_KEY}
