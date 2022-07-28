@@ -27,6 +27,4 @@ const sendMessage = async (message) => {
     }
 }
 
-module.exports = {
-    sendMessage
-}
+module.exports = sendMessage;

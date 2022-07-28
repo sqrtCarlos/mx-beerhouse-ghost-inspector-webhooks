@@ -16,6 +16,7 @@ default: &default
   SUBSCRIPTION_SUITE: ${env:SUBSCRIPTION_SUITE}
   REGION: ${self:custom.region}
   SLACK_TOKEN: ${env:SLACK_TOKEN}
+  SLACK_CHANNELS: ${env:SLACK_CHANNELS}
 
 local:
   <<: *default
