@@ -3,7 +3,11 @@ const { sleep, buildResponse } = require('../utils/webhook.utils.js');
 const getCognitoToken = require('./authentication.js');
 
 
-const getSubscriptions = async (token) => {
+const getSubscriptions = async (token=null) => {  
+    if (token === null) {
+        const tokenResponse = await getCognitoToken();
+        token = tokenResponse.data.IdToken
+    }
     const data = JSON.stringify({
     query: `query {
                 me {
@@ -30,7 +34,8 @@ const getSubscriptions = async (token) => {
     return buildResponse(200, res, ['data', 'me', 'subscriptions']);
 }
 
-const deleteSubscription = async (serverToken, subId) => {
+const deleteSubscription = async (subId) => {
+    const serverToken = process.env.SERVER_TOKEN;
     const data = JSON.stringify({
     query: `mutation ($input: ActivateSubscriptionInput!){
         deleteSubscription(input: $input) {
@@ -57,7 +62,11 @@ const deleteSubscription = async (serverToken, subId) => {
     return buildResponse(200, res, ['data', 'deleteSubscription']);
 }
 
-const activateSubscription = async (token, subId) => {
+const activateSubscription = async (subId, token=null) => {
+    if (token === null) {
+        const tokenResponse = await getCognitoToken();
+        token = tokenResponse.data.IdToken
+    }
     const data = JSON.stringify({
     query: `mutation ($input: ActivateSubscriptionInput!){
             activateSubscription(input: $input) {
@@ -85,15 +94,19 @@ const activateSubscription = async (token, subId) => {
     return buildResponse(200, res, ['data', 'success']);
 }
 
-const validateSubsStatus = async (token, subs) => {
+const validateSubsStatus = async (subs, token=null) => {
     let response = false;
     let validatedSubs = [];
+    if (token === null) {
+        const tokenResponse = await getCognitoToken();
+        token = tokenResponse.data.IdToken
+    }
     subs.forEach(async (i) => {
         if (i.status === 'ACTIVE') {
             validatedSubs.push(i.id)
         }
         if (i.status === 'PAUSED') {
-            response = await activateSubscription(token, i.id);
+            response = await activateSubscription(i.id, token);
             if (response) {
                 validatedSubs.push(i.id)
             }
@@ -111,9 +124,9 @@ const deleteSubscriptions = async (timeToSleep) => {
     if (userTokenResponse.success) {
         let subsResponse = await getSubscriptions(userTokenResponse.data.IdToken);
         if (subsResponse.success) {
-            let subsIds = await validateSubsStatus(userTokenResponse.data.IdToken, subsResponse.data);
+            let subsIds = await validateSubsStatus(subsResponse.data, userTokenResponse.data.IdToken);
             subsIds.forEach(async (subId) => {
-                let deleteResponse = await deleteSubscription(process.env.SERVER_TOKEN, subId);
+                let deleteResponse = await deleteSubscription(subId);
                 if (!deleteResponse.success) {
                     console.log("Error in deleteSubscription:\n" + deleteResponse);
                 }

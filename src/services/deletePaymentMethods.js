@@ -4,7 +4,11 @@ const { buildResponse } = require('../utils/webhook.utils.js');
 const getCognitoToken = require('./authentication.js');
 
 
-const getPaymentMethods = async (token) => {
+const getPaymentMethods = async (token=null) => {
+    if (token === null) {
+        const tokenResponse = await getCognitoToken();
+        token = tokenResponse.data.IdToken
+    }
     const data = JSON.stringify({
     query: `query {
                 me {
@@ -30,7 +34,11 @@ const getPaymentMethods = async (token) => {
     return buildResponse(200, res, ['data', 'me', 'paymentMethods']);
 }
 
-const deletePaymentMethod = async (token, paymentId) => {
+const deletePaymentMethod = async (paymentId, token=null) => {
+    if (token === null) {
+        const tokenResponse = await getCognitoToken();
+        token = tokenResponse.data.IdToken
+    }
     const data = JSON.stringify({
     query: `mutation ($input: DeleteUserPaymentMethodInput!){
         deleteUserPaymentMethod(input: $input) {
@@ -64,7 +72,7 @@ const deletePaymentMethods = async () => {
         if (paymentResponse.success) {
             let paymentIds = paymentResponse.data;
             paymentIds.forEach(async (paymentId) => {
-                let deleteResponse = await deletePaymentMethod(userTokenResponse.data.IdToken, paymentId.id);
+                let deleteResponse = await deletePaymentMethod(paymentId.id, userTokenResponse.data.IdToken);
                 if (!deleteResponse.success) {
                     console.log("Error during deletePaymentMehod:\n" + JSON.stringify(deleteResponse));
                 }

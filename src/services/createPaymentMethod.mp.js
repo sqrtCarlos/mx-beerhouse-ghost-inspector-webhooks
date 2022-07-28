@@ -134,7 +134,10 @@ const createMpPaymentMethod = async () => {
                 if (userCard.success) {
                     const defaultCard = await setDefaulCard(userTokenResponse.data.IdToken, userCard.data)
                     if (defaultCard.success) {
-                        return { success: true }
+                        return { 
+                            success: true,
+                            data: defaultCard
+                        }
                     }
                 }
                 else {
