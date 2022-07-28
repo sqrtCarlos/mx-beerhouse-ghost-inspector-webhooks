@@ -6,10 +6,19 @@ const deletePaymentMethods = require('./services/deletePaymentMethods.js');
 const sendMessage = require('./utils/slack.utils.js');
 
 
-module.exports.runSubscriptionsSuite = async (event) => {    
+module.exports.runSubscriptionsSuite = async (event) => {
+    const data = JSON.stringify({
+        apiKey: process.env.API_KEY,
+        email: process.env.USER_EMAIL,
+        password: process.env.USER_PWD
+    })    
     const config = {
-        method: 'get',
+        method: 'post',
         url: process.env.SUBSCRIPTION_SUITE,
+        headers: { 
+            'Content-Type': 'application/json'
+        },
+        data: data
     }
     try {
         await deleteSubscriptions(1);

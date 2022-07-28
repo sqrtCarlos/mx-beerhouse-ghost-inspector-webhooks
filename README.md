@@ -28,7 +28,7 @@ This project will provision the scenarios for the tests as well as clean up thes
 
 ## Test locally
 
-* `npm run dev` will run api gateway locally in your machine on port `3000` so you can test the function as it on AWS api gateway
+* `npm run dev` will start cron jobs and run api gateway locally in your machine on port `3000` so you can test the function as it on AWS api gateway
 
 * POST `/webhook/delete-subs` in order to delete all subscriptions
 

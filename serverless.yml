@@ -11,12 +11,15 @@ custom:
   serverless-offline:
     noPrependStageInUrl: true
   globalSchedule: cron(0/1 * * * ? *)
+  globalEnv: ${file(./serverless/env-default.yml):${self:custom.stage}}
+  subsSuiteEnv: ${file(./serverless/env-default.yml):subsSuite}
 
 provider:
   name: aws
   runtime: nodejs16.x
   stage: ${self:custom.stage}
   region: ${self:custom.region}
+  environment: ${self:custom.globalEnv}
 
 functions:
   webhookDeleteSubs:
@@ -32,6 +35,7 @@ functions:
          path: /webhook/add-mp-payment-method
          method: post
   runSubscriptionsSuite:
-    handler: ./src/createDeleteSubsScenario.runSubscriptionsSuite
+    handler: ./src/createSubsScenario.runSubscriptionsSuite
     events:
       - schedule: ${self:custom.globalSchedule}
+    environment: ${self:custom.subsSuiteEnv}
